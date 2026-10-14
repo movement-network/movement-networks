@@ -48,6 +48,27 @@ To bootstrap a fullnode or archival node with existing blockchain data:
 
 The backups are updated hourly and maintain 14 days of snapshot history.
 
+### If you restored before 2026-10-14: delete the shared node identity
+
+Snapshots taken of the whole data directory include the backup node's persisted network
+identity, `db/ephemeral_identity_key`. Every node restored from such a snapshot presents the
+same peer id to the Movement validator fullnodes, which keep one connection per peer id and
+close the older one whenever another node with the same id connects. Affected nodes see
+`NoConnectedPeers` errors and frequent reconnects, and they slow down every other node that
+shares the id. This affects mainnet restores taken on or after 2026-05-05 and testnet restores
+from snapshots dated 2026-01-20 to 2026-02-06.
+
+The fix is a one-time change on your node:
+
+```bash
+# Stop the node, then remove the copied identity from its data directory
+rm -f /opt/data/aptos/db/ephemeral_identity_key   # adjust to your data_dir
+# Start the node; it generates its own key and keeps it from then on
+```
+
+No configuration change is needed. `l1_restore.sh` now removes the file automatically after
+a restore.
+
 ## Node Types
 
 ### Standard Fullnode

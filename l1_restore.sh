@@ -13,6 +13,10 @@
 #   - Sufficient disk space (mainnet ~700GB, testnet ~260GB)
 #
 # The backups are updated hourly and maintain 14 days of snapshots.
+#
+# Note: older snapshots include the backup node's persisted network identity
+# (db/ephemeral_identity_key). This script deletes it after restoring so that
+# every node bootstrapped here gets its own peer id.
 
 set -e
 
@@ -80,6 +84,14 @@ restic restore "$SNAPSHOT_ID" \
   --target "$RESTORE_PATH" \
   --no-lock \
   -o s3.unsafe-anonymous-auth=true
+
+# Remove any node network identity that came with the snapshot. aptos-node persists its
+# public-network key at db/ephemeral_identity_key; a restored copy makes this node present
+# the same peer id as every other node restored from the same snapshot, and the upstream
+# fullnodes then keep closing the duplicate connections. The node generates a fresh key on
+# first start when the file is absent.
+find "$RESTORE_PATH" -type f -name ephemeral_identity_key -print -delete 2>/dev/null || true
+echo "Removed any db/ephemeral_identity_key from the restored data; the node will generate its own identity."
 
 echo ""
 echo "Restore complete!"
