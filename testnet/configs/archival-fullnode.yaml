@@ -34,12 +34,27 @@ storage:
 
 full_node_networks:
   - network_id: "public"
+    # Seeds bootstrap a fresh node; on-chain discovery keeps the VFN list current after it syncs.
+    # Each seed is keyed by its validator's account address (the peer id on-chain discovery uses),
+    # with the VFN's network key in the address, so seeds and on-chain entries merge into one peer.
     discovery_method: "onchain"
     listen_address: "/ip4/0.0.0.0/tcp/6182"
     seeds:
-      87d46ec39f5b359cf510bbcfad64746869f08a71aafabcca3ae6203de70cc3ca:
+      bd7327ed25db839bd97d11f621afd7c6bd9ef7fa9e4a5044e02bc4e449ad18a6:
         addresses:
-          - "/dns/vfn-02.nodes.testnet.movementnetwork.xyz/tcp/6182/noise-ik/0x9264dad024936304469b904b8c80366246dff8121de2cfa4cacad96d67b85f06/handshake/0"
+        - "/dns/consensus-1.testnet.movementnetwork.xyz/tcp/6182/noise-ik/5f3ccf14d5217249f94bdd752c2fa42d7e309522845001b62f0a05fbee7e1f2b/handshake/0"
+        role: "Upstream"
+      5fb9e7d3c56e2036549b1fd0c4ca3b920ca5f7a1efeb5a14f87a6ab8a39974ba:
+        addresses:
+        - "/dns/consensus-2.testnet.movementnetwork.xyz/tcp/6182/noise-ik/5f6930a1eff6d52bb452434dbbd7fbfd86cff9b63c19513c00d8ebf70dcc1f4c/handshake/0"
+        role: "Upstream"
+      d963d9415c267862a1d72ccf9f26aa1c4091442f0bbc73cbcc59bfe734a00f7:
+        addresses:
+        - "/dns/consensus-3.testnet.movementnetwork.xyz/tcp/6182/noise-ik/ba9898cd14fe8b995991fbed8f84f6d981c62faa82e7fca1a95995aef1b55134/handshake/0"
+        role: "Upstream"
+      a1ef53a76fe31c0844c7b87988a3e2b905287ec687a8e081d793597eb351ed5c:
+        addresses:
+        - "/dns/consensus-4.testnet.movementnetwork.xyz/tcp/6182/noise-ik/9264dad024936304469b904b8c80366246dff8121de2cfa4cacad96d67b85f06/handshake/0"
         role: "Upstream"
 
 api:
