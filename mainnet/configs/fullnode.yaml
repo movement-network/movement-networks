@@ -21,12 +21,26 @@ storage:
 
 full_node_networks:
 - network_id: "public"
-  discovery_method: "onchain"
+  # Seeds only: the four Movement validator fullnodes. On-chain discovery is off so
+  # the node connects to exactly these peers and nothing else.
+  discovery_method: "none"
   listen_address: "/ip4/0.0.0.0/tcp/6182"
   seeds:
-    9967EBF40AC8C2CCB38709488952DA1826176584EA3067B63B1695362ECB3D1F:
+    9967ebf40ac8c2ccb38709488952da1826176584ea3067b63b1695362ecb3d1f:
       addresses:
-      - "/dns/consensus.mainnet.movementnetwork.xyz/tcp/6182/noise-ik/9967EBF40AC8C2CCB38709488952DA1826176584EA3067B63B1695362ECB3D1F/handshake/0"
+      - "/dns/consensus-1.mainnet.movementnetwork.xyz/tcp/6182/noise-ik/9967ebf40ac8c2ccb38709488952da1826176584ea3067b63b1695362ecb3d1f/handshake/0"
+      role: "Upstream"
+    6ebcb891dde06e126939099f0a17f42273e036f20a0fc13d80ae6f60ed270541:
+      addresses:
+      - "/dns/consensus-2.mainnet.movementnetwork.xyz/tcp/6182/noise-ik/6ebcb891dde06e126939099f0a17f42273e036f20a0fc13d80ae6f60ed270541/handshake/0"
+      role: "Upstream"
+    340f8291558e676d8ab1ffd291a9419bbb2f708aa737e4cbd479bbe525445f39:
+      addresses:
+      - "/dns/consensus-3.mainnet.movementnetwork.xyz/tcp/6182/noise-ik/340f8291558e676d8ab1ffd291a9419bbb2f708aa737e4cbd479bbe525445f39/handshake/0"
+      role: "Upstream"
+    5eb1d58f4bed9ed88c8416c3018ee5470552a39af8898b88bb97ddbb3b4bcd3a:
+      addresses:
+      - "/dns/consensus-4.mainnet.movementnetwork.xyz/tcp/6182/noise-ik/5eb1d58f4bed9ed88c8416c3018ee5470552a39af8898b88bb97ddbb3b4bcd3a/handshake/0"
       role: "Upstream"
 
 api:
