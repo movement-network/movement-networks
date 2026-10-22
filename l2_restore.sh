@@ -36,4 +36,7 @@ restic \
   --exclude-xattr security.selinux \
   -o s3.unsafe-anonymous-auth=true
 
+# Remove any copied network identity so this node generates its own
+find "$RESTORE_PATH" -type f -name ephemeral_identity_key -print -delete 2>/dev/null || true
+
 echo "Restore complete."
